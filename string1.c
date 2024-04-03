@@ -1,11 +1,38 @@
 #include <stdio.h>
+#include <math.h>
 
-int main()
-{
-    printf("ïnserire cose:");
-char parola[25];// nella memoria vengono bussati 30 caratteri, in questo caso il programma mette automaticamente \0
-scanf("%[^\n]s", parola); //niente &parola, %[^\n]s serve per includere gli space,l apice non è ˆ ma ^ 
-//respiri piano per non fare rumore ti addormenti ti sera e ti risvegli col sole
-printf("%s\n", parola);
+double square_root(double x) {
+    if (x < 0) {
+        printf("Input negativo! Il programma termina.\n");
+        exit(1);
+    }
+
+    double guess = x / 2.0; // Inizia con una stima ragionevole
+
+    while (1) {
+        double new_guess = (guess + x / guess) / 2.0; // Formula di Erone
+        if (fabs(new_guess - guess) < 0.00001) // Convergenza raggiunta
+            return new_guess;
+        guess = new_guess;
+    }
 }
-// char *a =""fifone
+
+int main() {
+    double number;
+
+    while (1) {
+        printf("Inserisci un numero: ");
+        scanf("%lf", &number);
+
+        if (number < 0) {
+            printf("Numero negativo inserito. Il programma termina.\n");
+            break;
+        }
+
+        double result = square_root(number);
+
+        printf("La radice quadrata di %.2f è approssimativamente %.6f\n", number, result);
+    }
+
+    return 0;
+}
