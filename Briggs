@@ -1,0 +1,74 @@
+#include <stdio.h>
+#include <math.h>
+
+double logBriggs(double x)
+{
+ 
+    const double ln10 = 2.3025850929940456840179914546844;
+    const double ln2 = 0.69314718055994530941723212145818;
+    const double ln5 = 1.6094379124341003746007593332262;
+
+ 
+    const double c1 = 1.443651;
+    const double c2 = 1.540608;
+    const double c3 = 0.333331;
+    const double c4 = 0.111115;
+
+    double n = 0.0;
+    double p = 0.0;
+
+    if (x >= 1.0) 
+{
+        while (x >= 2.0) 
+{
+            x /= 2.0;
+            n += 1.0;
+}
+        while (x < 1.0) 
+{
+            x *= 2.0;
+            n -= 1.0;
+}
+        p = x - 1.0;
+    } 
+else 
+{ 
+        while (x < 0.5) 
+{
+            x *= 2.0;
+            n -= 1.0;
+ }
+        while (x >= 1.0)
+{
+            x /= 2.0;
+            n += 1.0;
+  }
+        p = x - 1.0;
+    }
+
+    double s = p / (2.0 + p);
+    double s2 = s * s;
+    double s3 = s2 * s;
+    double s4 = s2 * s2;
+
+ 
+    double log_value = (2.0 * s) * (1.0 + (c1 * s) + (c2 * s2) + (c3 * s3) + (c4 * s4));
+
+   
+    log_value += n * ln2;
+
+    return log_value;
+}
+
+int main() {
+    double x;
+    printf("Inserisci il numero di cui vuoi calcolare il logaritmo (base 10): ");
+    scanf("%lf", &x);
+
+  
+    double result = logBriggs(x);
+
+    printf("Il logaritmo base 10 di %.2lf secondo il metodo di Briggs è: %.8lf\n", x, result);
+
+    return 0;
+}
